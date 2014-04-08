@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	
+	<package name="my" extends="struts-default" namespace="/">
+		
+		<action name="login" class="personnelaction" method="login">
+			<result name="succ" type="redirect">/index.jsp</result>
+			<result name="fail" type="redirect">/login.jsp</result>
+		</action>
+	</package>
+	<!-- js ajax调用 此处使用xml -->
+	<package name="myjs" extends="struts-default" namespace="/js">
+		<!-- 查询市 -->
+		<action name="loadshi" class="addressaction" method="loadshi">
+			
+		</action>
+		<!-- 查询区 -->
+		<action name="loadqu" class="addressaction" method="loadqu">
+			
+		</action>
+		
+		<!-- 验证是否存在 -->
+		<action name="iscustname" class="customeraction" method="iscunzai">
+			
+		</action>
+		
+		<!-- 根据权限提示用户名 -->
+		<action name="findperbyquanxian" class="personnelaction" method="findPersonnelAllByQxid">
+		
+		</action>
+	</package>
+	
+	<package name="my1" extends="struts-default" namespace="/files">
+		<interceptors>
+			<interceptor name="myinter" class="com.starinno.portal.common.interceptor.MyInterceptor"></interceptor>
+			<!-- 配置拦截器栈 -->
+			<interceptor-stack name="mystack">
+				<interceptor-ref name="myinter"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 默认调用拦截器栈 -->
+		<default-interceptor-ref name="mystack"></default-interceptor-ref>
+		<global-results>
+			<result name="login">../login.jsp</result>
+		</global-results>
+		
+		<!-- ***************************************************客户******************************************** -->
+		<!-- 客户查询列表 复杂查询 -->
+		<action name="findByCondition" class="customeraction" method="findByCondition">
+			<result name="succ" type="dispatcher">customerlist.jsp</result>
+		</action>
+		<!-- 普通查询 -->
+		<action name="findlist" class="customeraction" method="findByAll">
+			<result name="succ" type="dispatcher">customerlist.jsp</result>
+		</action>
+
+		<!-- 客户新增 -->
+		<action name="savecust" class="customeraction" method="savecust">
+			<result name="succ" type="redirect">customer_create.jsp</result>
+		</action>
+		
+		
+		<!-- 客户删除 -->
+	 	<action name="deletecust" class="customeraction" method="deletecust">
+			<result name="succ" type="redirectAction">findlist</result>
+		</action>
+	 
+		
+		<!-- 修改之前要做的查询 -->
+		<action name="getcustforupdate" class="customeraction" method="getcust">
+			<result name="succ">customer_update.jsp</result>
+		</action>
+		<!-- 修改 -->
+		<action name="updatecust" class="customeraction" method="uppdatecust">
+			<result name="succ" type="redirectAction">getcustforupdate?custid=${r}</result>
+		</action>
+		
+		<!-- 针对于详情 查看-->
+		<action name="getcust" class="customeraction" method="getcust">
+			<result name="succ">customer_ck.jsp</result>
+		</action>
+		<!-- 导出 -->
+		<action name="importcust" class="customeraction" method="importcust">
+			<result name="succ" type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="inputName">excelStream</param>
+				<param name="contentDisposition">attachment;filename="customer.xls"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+
+		<!--****************************************************** 业务员********************************************** -->
+		<!-- 修改密码 -->
+		<action name="uppdatepwd" class="personnelaction" method="uppdatepwd">
+			<result name="succ">user_pwd.jsp</result>
+			
+		</action>
+		<!-- 修改资料 -->
+		<action name="uppdateziliao" class="personnelaction" method="uppdateziliao">
+			<result name="succ">user_info.jsp</result>
+		</action>
+		
+		<!-- 显示列表 -->
+		<action name="findperlist" class="personnelaction" method="findByAll">
+			<result name="succ">personnellist.jsp</result>
+		</action>
+		
+		
+		<!--查询对象 用于修改-->
+		<action name="findperobj" class="personnelaction" method="ckpersonnel">
+			<result name="succ">personnel_update.jsp</result>
+		</action>
+		<!-- 修改 -->
+		<action name="updateper" class="personnelaction" method="xgpersonnel">
+			<result name="succ" type="redirectAction">findperobj?gonghao=${r}</result>
+		</action>
+	
+		 <action name="deleteperobj" class="personnelaction" method="deletepersonnel">
+			<result name="succ" type="redirectAction">findperlist</result>
+		</action> 
+		<!-- 新增业务员对象 -->
+		<action name="addperobj" class="personnelaction" method="addpersonnel">
+			<result name="succ">personnel_create.jsp</result>
+		</action>
+		<!-- 导出 -->
+		<action name="importper" class="personnelaction" method="importper">
+			<result name="succ" type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="inputName">excelStream</param>
+				<param name="contentDisposition">attachment;filename="customer_personnel.xls"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		
+		
+		<!-- ************************联系人记  **************************-->
+		<!-- 查询 -->
+		<action name="findtxlBycustId" class="customerhistoryaction"  method="findById">
+				<result name="succ">customer_txlhistory.jsp</result>
+		</action>
+		<!-- 新增 -->
+		<action name="savetxl" class="customerhistoryaction"  method="savetxl">
+				<result name="succ">customer_txlhistory_create.jsp</result>
+		</action>
+		<!-- 删除 -->
+		<action name="deletetxl" class="customerhistoryaction"  method="deletetxl">
+				<result name="succ" type="redirectAction">findtxlBycustId</result>
+		</action>
+		<!-- 修改前查询对象 -->
+		<action name="gettxl" class="customerhistoryaction"  method="gettxl">
+				<result name="succ">customer_txlhistory_update.jsp</result>
+		</action>
+		<!-- 修改数据 -->
+		<action name="uppdatetxl" class="customerhistoryaction"  method="uppdatetxl">
+				<result name="succ" type="redirectAction">gettxl?lxid=${r}</result>
+		</action>
+		
+		<!-- 导出 -->
+		<action name="importhistory" class="customerhistoryaction" method="importhistory">
+			<result name="succ" type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="inputName">excelStream</param>
+				<param name="contentDisposition">attachment;filename="customer_relationship_record.xls"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		<!-- *********************************************address********************* -->
+		<!-- 加载省 -->
+		<action name="cksheng" class="addressaction" method="cksheng">
+			<result name="succ">sheng.jsp</result>
+		</action>
+		<!-- 加载市-->
+		<action name="ckshibyshengid" class="addressaction" method="ckshibyshengid">
+			<result name="succ">shi.jsp</result>
+		</action>
+		<!-- 加载区 -->
+		<action name="ckqubyshiid" class="addressaction" method="ckqubyshiid">
+			<result name="succ">qu.jsp</result>
+		</action>
+		<!-- 添加省-->
+		<action name="addsheng" class="addressaction" method="addsheng">
+			<result name="succ">sheng.jsp</result>
+		</action>
+		<!-- 删除省 -->
+		<action name="dropsheng" class="addressaction" method="dropsheng">
+			<result name="succ">sheng.jsp</result>
+		</action>
+		<!-- 新增市 -->
+		<action name="addshi" class="addressaction" method="addshi">
+			<result name="succ">shi.jsp</result>
+		</action>
+		<!-- 删除市 -->
+		<action name="dropshi" class="addressaction" method="dropshi">
+			<result name="succ">shi.jsp</result>
+		</action>
+		<!-- 新增区 -->
+		<action name="addqu" class="addressaction" method="addqu">
+			<result name="succ">qu.jsp</result>
+		</action>
+		<!-- 删除区 -->
+		<action name="dropqu" class="addressaction" method="dropqu">
+			<result name="succ">qu.jsp</result>
+		</action>
+	</package>
+	
+</struts>    

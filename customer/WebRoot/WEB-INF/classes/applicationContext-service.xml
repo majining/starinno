@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	
+	<bean id="customerservice" class="com.starinno.portal.customer.service.CustomerService">
+		<property name="as" ref="addressservice"></property>
+		<property name="icd" ref="customerdaoimpl"></property>
+	</bean>
+	
+	<bean id="customerhistoryservice" class="com.starinno.portal.customer.service.CustomerHistoryService">
+		<property name="icd" ref="custhistorydaoimpl"></property>
+	</bean>
+	
+	<bean id="addressservice" class="com.starinno.portal.address.service.AddressService">
+		<property name="iad" ref="addressdaoimpl"></property>
+	</bean>
+	
+	<bean id="personnelservice" class="com.starinno.portal.personnel.service.PersonnelService">
+		<property name="qs"  ref="qxservice"></property>
+		<property name="ipd" ref="personneldaoimpl"></property>
+	</bean>
+	
+	<bean id="qxservice" class="com.starinno.portal.quanxian.service.QxService">
+		<property name="iqd" ref="qxdaoimpl"></property>
+	</bean>
+	
+	
+	</beans>

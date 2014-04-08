@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl"></property>
+		<property name="user" value="customer"></property>
+		<property name="password" value="star123"></property>
+		<property name="initialPoolSize" value="2"></property>
+		<property name="minPoolSize" value="2"></property>
+		<property name="maxPoolSize" value="6"></property>
+		<property name="acquireIncrement" value="2"></property>
+		<property name="maxIdleTime" value="100"></property>
+		<property name="checkoutTimeout" value="10000"></property>
+</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<!--
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.Oracle9Dialect
+				</prop>
+				<prop key="hibernate.show_sql">
+					true
+				</prop>
+			</props>
+		</property>
+		-->
+		<property name="configLocation"
+			value="classpath:hibernate.cfg.xml">
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/starinno/portal/customer/pojo/TbCustomertxl.hbm.xml</value>
+				<value>com/starinno/portal/personnel/pojo/TbPersonnel.hbm.xml</value>				
+				<value>com/starinno/portal/customer/pojo/TbCustomerinfo.hbm.xml</value>
+				<value>com/starinno/portal/address/pojo/TbShi.hbm.xml</value>
+				<value>com/starinno/portal/address/pojo/TbSheng.hbm.xml</value>
+				<value>com/starinno/portal/address/pojo/TbQu.hbm.xml</value>
+				<value>com/starinno/portal/quanxian/pojo/TbQx.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 此处在实现里面用了注解@Transactional(readOnly=false,rollbackFor=Exception.class) -->
+	<tx:annotation-driven  proxy-target-class="true" transaction-manager="tx"/>
+	<!-- 定义切面 -->
+	<bean id="tx" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>	
+	
+	
+	<import resource="applicationContext-impl.xml"/>
+	<import resource="applicationContext-service.xml"/>
+	<import resource="applicationContext-action.xml"/>
+	<!--  -->
+	</beans>
