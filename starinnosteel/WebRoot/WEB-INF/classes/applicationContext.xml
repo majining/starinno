@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+			<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"></property>
+			<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl"></property>
+			<property name="user" value="soctt"></property>
+			<property name="password" value="tiger"></property>
+			<property name="initialPoolSize" value="2"></property>
+			<property name="minPoolSize" value="2"></property>
+			<property name="maxPoolSize" value="6"></property>
+			<property name="acquireIncrement" value="2"></property>
+			<property name="maxIdleTime" value="100"></property>
+			<property name="checkoutTimeout" value="10000"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource"></ref>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+				<prop key="hibernate.dialect">show_sql</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>
+					com/starinno/steel/portal/user/pojo/UserInfo.hbm.xml
+				</value>
+			</list>
+		</property></bean>
+	
+	<import resource="applicationContext-impl.xml"/>
+	<import resource="applicationContext-service.xml"/>
+	<import resource="applicationContext-action.xml"/>
+	
+	</beans>
