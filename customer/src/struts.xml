@@ -45,7 +45,7 @@
 		<!-- 默认调用拦截器栈 -->
 		<default-interceptor-ref name="mystack"></default-interceptor-ref>
 		<global-results>
-			<result name="login">../login.jsp</result>
+			<result name="login">../dosession.jsp</result>
 		</global-results>
 		
 		<!-- ***************************************************客户******************************************** -->

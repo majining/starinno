@@ -22,7 +22,7 @@ public class MyInterceptor extends AbstractInterceptor {
 			return arg0.invoke();
 		}
 		session.put("login_info", "由于您长时间没有操作!请重新登陆!");
-		return arg0.invoke();
+		return "login";
 	}
 
 }

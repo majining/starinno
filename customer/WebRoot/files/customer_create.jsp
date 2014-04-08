@@ -65,11 +65,11 @@
                    </tr>
 					<tr bgcolor="#FFFFFF">
 				    <td align="right">电话:</td>
-				    <td><input id="gphone" name="gphone" type="text" value=""/></td>
+				    <td><input id="gphone" name="gphone" type="text" value="" onKeyUp="value=value.replace(/[^0-9_]/ig,'')"/></td>
                    </tr>
 					<tr bgcolor="#FFFFFF">
 				    <td align="right">手机:</td>
-				    <td><input id="mphone" name="mphone" type="text" value=""/></td>
+				    <td><input id="mphone" name="mphone" type="text" value="" onKeyUp="value=value.replace(/[^0-9_]/ig,'')"/></td>
                    </tr>
                    <tr bgcolor="#FFFFFF">
 				    	<td align="right" >地址:</td>

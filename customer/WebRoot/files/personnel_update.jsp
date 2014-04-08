@@ -32,8 +32,8 @@ if(session.getAttribute("operate_info")!=null){
           <td height="62" background="../images/nav04.gif">
 		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 		    <tr>
-			  <td width="21">&nbsp;<input name="Submit3" type="button" class="right-button08" value="后退->客户列表" onclick="location.href='findperlist.action'"/></td>
-			  <td width="100%" align="center" style="font: bold 20px arial,sans-serif;">客户信息修改</td>
+			  <td width="21">&nbsp;<input name="Submit3" type="button" class="right-button08" value="后退->人员列表" onclick="location.href='findperlist.action'"/></td>
+			  <td width="100%" align="center" style="font: bold 20px arial,sans-serif;">人员信息修改</td>
 			  </tr>
           </table>
           	</td>

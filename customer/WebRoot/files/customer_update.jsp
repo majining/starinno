@@ -68,11 +68,11 @@
                    </tr>
 					<tr bgcolor="#FFFFFF">
 				    <td align="right">电话:</td>
-				    <td><input name="gphone" id="gphone" type="text" value="<s:property value="tc.customerGphone"/>"/></td>
+				    <td><input name="gphone" id="gphone" type="text" value="<s:property value="tc.customerGphone"/>" onKeyUp="value=value.replace(/[^0-9_]/ig,'')"/></td>
                    </tr>
 					<tr bgcolor="#FFFFFF">
 				    <td align="right">手机:</td>
-				    <td><input name="mphone" type="text" id="mphone" value="<s:property value="tc.customerMphone"/>"/></td>
+				    <td><input name="mphone" type="text" id="mphone" value="<s:property value="tc.customerMphone"/>" onKeyUp="value=value.replace(/[^0-9_]/ig,'')"/></td>
                    </tr>
                    <tr bgcolor="#FFFFFF">
 				    	<td align="right" >地址:</td>
